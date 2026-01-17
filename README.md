@@ -2,7 +2,7 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-A Home Assistant integration to monitor attendance at your home PureGym.
+A Home Assistant integration to monitor attendance at your home PureGym. Exposes a single sensor named `puregym_attendance` and updates every 15 minutes.
 
 This integration is in no way affiliated to PureGym.
 
