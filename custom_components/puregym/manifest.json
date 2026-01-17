@@ -1,0 +1,12 @@
+{
+  "domain": "puregym",
+  "name": "PureGym",
+  "codeowners": ["jasonyates"],
+  "config_flow": true,
+  "documentation": "https://github.com/jasonyates/ha-puregym",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/jasonyates/ha-puregym/issues",
+  "requirements": ["puregym-attendance==2.0"],
+  "version": "1.0.0"
+}
