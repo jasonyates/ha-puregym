@@ -43,7 +43,7 @@ class PuregymDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         if self._client is None:
             from puregym_attendance import PuregymAPIClient
 
-            self._client = PuregymAPIClient(email=self._email, pin=self._pin)
+            self._client = PuregymAPIClient(email=self._email, pin=int(self._pin))
         return self._client
 
     async def _async_update_data(self) -> dict[str, Any]:

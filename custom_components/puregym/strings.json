@@ -6,8 +6,7 @@
         "description": "Enter your PureGym credentials",
         "data": {
           "email": "Email",
-          "pin": "PIN",
-          "scan_interval": "Update interval (minutes)"
+          "pin": "PIN"
         }
       }
     },
@@ -24,7 +23,7 @@
       "init": {
         "title": "PureGym Options",
         "data": {
-          "scan_interval": "Update interval (minutes)"
+          "scan_interval": "Refresh interval (minutes)"
         }
       }
     }

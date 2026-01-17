@@ -10,6 +10,11 @@ from homeassistant.config_entries import ConfigEntry, ConfigFlow, OptionsFlow
 from homeassistant.const import CONF_EMAIL, CONF_PIN
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers.selector import (
+    TextSelector,
+    TextSelectorConfig,
+    TextSelectorType,
+)
 
 from .const import (
     DEFAULT_SCAN_INTERVAL,
@@ -23,11 +28,11 @@ _LOGGER = logging.getLogger(__name__)
 CONF_SCAN_INTERVAL = "scan_interval"
 
 
-async def validate_credentials(email: str, pin: int) -> dict[str, Any]:
+def validate_credentials(email: str, pin: str) -> dict[str, Any]:
     """Validate credentials and return gym info."""
     from puregym_attendance import PuregymAPIClient
 
-    client = PuregymAPIClient(email=email, pin=pin)
+    client = PuregymAPIClient(email=email, pin=int(pin))
     # This will raise an exception if auth fails
     attendance = client.get_gym_attendance()
     return {
@@ -75,9 +80,7 @@ class PuregymConfigFlow(ConfigFlow, domain=DOMAIN):
                         CONF_PIN: pin,
                     },
                     options={
-                        CONF_SCAN_INTERVAL: user_input.get(
-                            CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
-                        ),
+                        CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
                     },
                 )
 
@@ -86,12 +89,8 @@ class PuregymConfigFlow(ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_EMAIL): str,
-                    vol.Required(CONF_PIN): int,
-                    vol.Optional(
-                        CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
-                    ): vol.All(
-                        vol.Coerce(int),
-                        vol.Range(min=MIN_SCAN_INTERVAL, max=MAX_SCAN_INTERVAL),
+                    vol.Required(CONF_PIN): TextSelector(
+                        TextSelectorConfig(type=TextSelectorType.PASSWORD)
                     ),
                 }
             ),
@@ -117,15 +116,12 @@ class PuregymOptionsFlow(OptionsFlow):
             step_id="init",
             data_schema=vol.Schema(
                 {
-                    vol.Optional(
+                    vol.Required(
                         CONF_SCAN_INTERVAL,
                         default=self.config_entry.options.get(
                             CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
                         ),
-                    ): vol.All(
-                        vol.Coerce(int),
-                        vol.Range(min=MIN_SCAN_INTERVAL, max=MAX_SCAN_INTERVAL),
-                    ),
+                    ): int,
                 }
             ),
         )
