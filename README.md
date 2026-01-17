@@ -2,7 +2,9 @@
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 
-A Home Assistant integration to monitor attendance at your PureGym.
+A Home Assistant integration to monitor attendance at your home PureGym.
+
+This integration is in no way affiliated to PureGym.
 
 ## Installation
 

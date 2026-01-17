@@ -61,6 +61,4 @@ class PuregymAttendanceSensor(CoordinatorEntity[PuregymDataUpdateCoordinator], S
         attrs = {}
         if self.coordinator.data:
             attrs["gym_name"] = self.coordinator.data.get("gym_name")
-        if self.coordinator.last_update_success_time:
-            attrs["last_updated"] = self.coordinator.last_update_success_time.isoformat()
         return attrs
